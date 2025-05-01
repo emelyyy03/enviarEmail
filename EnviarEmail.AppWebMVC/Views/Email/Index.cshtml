@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Enviar Correo";
+}
+
+<h2>Enviar Correo</h2>
+
+<form asp-action="EnviarCorreo" asp-controller="Email" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Correo destino:</label>
+        <input type="email" name="destino" required />
+    </div>
+    <div>
+        <label>Asunto:</label>
+        <input type="text" name="asunto" required />
+    </div>
+    <div>
+        <label>Mensaje:</label>
+        <textarea name="mensaje" required></textarea>
+    </div>
+    <div>
+        <label>Archivos adjuntos:</label>
+        <input type="file" name="archivos" multiple />
+    </div>
+    <button type="submit">Enviar</button>
+</form>
+
+@if (ViewBag.Mensaje != null)
+{
+    <p style="color:green">@ViewBag.Mensaje</p>
+}
