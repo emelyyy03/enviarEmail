@@ -2,29 +2,62 @@
     ViewData["Title"] = "Enviar Correo";
 }
 
-<h2>Enviar Correo</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Enviar Correo con Archivos Adjuntos</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="EnviarCorreo" asp-controller="Email" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Correo destino:</label>
+                    <input type="email" name="destino" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Asunto:</label>
+                    <input type="text" name="asunto" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mensaje:</label>
+                    <textarea name="mensaje" rows="4" class="form-control" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Archivos adjuntos:</label>
+                    <input type="file" name="archivos" class="form-control" multiple />
+                </div>
+                <button type="submit" class="btn btn-success">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<form asp-action="EnviarCorreo" asp-controller="Email" method="post" enctype="multipart/form-data">
-    <div>
-        <label>Correo destino:</label>
-        <input type="email" name="destino" required />
-    </div>
-    <div>
-        <label>Asunto:</label>
-        <input type="text" name="asunto" required />
-    </div>
-    <div>
-        <label>Mensaje:</label>
-        <textarea name="mensaje" required></textarea>
-    </div>
-    <div>
-        <label>Archivos adjuntos:</label>
-        <input type="file" name="archivos" multiple />
-    </div>
-    <button type="submit">Enviar</button>
-</form>
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@if (ViewBag.Mensaje != null)
-{
-    <p style="color:green">@ViewBag.Mensaje</p>
+@section Scripts {
+    <script>
+        @if (TempData["MensajeExito"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: '@TempData["MensajeExito"]',
+                        confirmButtonColor: '#28a745'
+                    });
+            </text>
+        }
+        else if (TempData["MensajeError"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@TempData["MensajeError"]',
+                        confirmButtonColor: '#dc3545'
+                    });
+            </text>
+        }
+    </script>
 }

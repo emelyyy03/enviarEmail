@@ -24,14 +24,15 @@ namespace EnviarEmail.AppWebMVC.Controllers
             try
             {
                 await _emailService.SendEmailAsync(destino, asunto, mensaje, archivos);
-                ViewBag.Mensaje = "Correo enviado exitosamente.";
+                TempData["MensajeExito"] = "Correo enviado exitosamente.";
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = $"Error al enviar correo: {ex.Message}";
+                TempData["MensajeError"] = $"Error al enviar correo: {ex.Message}";
             }
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
+
     }
 }
